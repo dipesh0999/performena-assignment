@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Modern Registration Form</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrapper">
+    <div class="form_container">
+      <h2>Register Now</h2>
+      <form id="registrationForm">
+        <div class="form_step" data-field="fullName">
+          <label>Full Name</label>
+          <input type="text" placeholder="John Doe" />
+          <span class="error_msg"></span>
+        </div>
+
+        <div class="form_step" data-field="phone">
+          <label>Phone</label>
+          <input type="text" placeholder="10-digit number" />
+          <span class="error_msg"></span>
+        </div>
+
+        <div class="form_step" data-field="email">
+          <label>Email</label>
+          <input type="email" placeholder="you@example.com" />
+          <span class="error_msg"></span>
+        </div>
+
+        <div class="form_step" data-field="city">
+            <label>City</label>
+            <select>
+              <option value="">-- Select City --</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Ahmedabad">Ahmedabad</option>
+              <option value="Bengaluru">Bengaluru</option>
+            </select>
+            <span class="error_msg"></span>
+        </div>
+          
+
+        <div class="form_step" data-field="sport">
+          <label>Favorite Sport</label>
+          <input type="text" />
+          <span class="error_msg"></span>
+        </div>
+
+        <div class="form_step" data-field="team">
+          <label>Favorite Team</label>
+          <input type="text" />
+          <span class="error_msg"></span>
+        </div>
+
+        <div class="form_step" data-field="icon">
+          <label>Favorite Sports Icon</label>
+          <input type="text" />
+          <span class="error_msg"></span>
+        </div>
+
+        <button type="submit" id="next_btn"><span>Next</span></button>
+      </form>
+
+      <div class="summary" style="display: none;">
+        <div id="summaryFields"></div>
+        <div class="btn_group">
+          <button id="edit_btn"><span>Edit</span></button>
+          <button id="save_btn"><span>Save</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+      let currentStep = 0;
+      const fields = ['fullName', 'phone', 'email', 'city', 'sport', 'team', 'icon'];
+      $(document).ready(function () {
+        showStep(currentStep);
+      
+        $('#next_btn').on('click', function (e) {
+          e.preventDefault();
+          const stepField = $('.form_step').eq(currentStep);
+          const inputField = stepField.find('input, select');
+          const val = inputField.val().trim();
+          const field = stepField.data('field');
+      
+          if (!validate(field, val)) {
+            showError(stepField, field);
+            return;
+          }
+      
+          formData[field] = val;
+          stepField.removeClass('active');
+          currentStep++;
+      
+          if (currentStep < fields.length) {
+            showStep(currentStep);
+          } else {
+            $('#registrationForm').hide();
+            showSummary();
+          }
+        });
+      
+        $('#edit_btn').click(function () {
+          currentStep = 0;
+          $('#summaryFields').empty();
+          $('.form_step input').each(function () {
+            const name = $(this).closest('.form_step').data('field');
+            $(this).val(formData[name] || '');
+          });
+      
+          $('.summary').hide();
+          $('#registrationForm').show();
+          showStep(currentStep);
+        });
+      
+        $('#save_btn').click(function () {
+          alert('Data saved successfully!');
+        });
+      });
+      
+      function showStep(index) {
+        $('.form_step').removeClass('active');
+        $('.form_step').eq(index).addClass('active').find('input').focus();
+      }
+      
+      function validate(field, val) {
+        if (['fullName', 'city'].includes(field)) return val.length >= 3;
+        if (field === 'phone') return /^\d{10}$/.test(val);
+        if (field === 'email') return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+        return val !== '';
+      }
+      
+      function showError(stepField, field) {
+        const msg = {
+          fullName: 'Please enter at least 3 characters.',
+          phone: 'Please enter a valid 10-digit number.',
+          email: 'Please enter a valid email.',
+          city: 'Please select at least 1 option.',
+          sport: 'This field cannot be empty.',
+          team: 'This field cannot be empty.',
+          icon: 'This field cannot be empty.'
+        };
+      
+        const inputField = stepField.find('input');
+        stepField.find('.error_msg').text(msg[field]);
+        inputField.addClass('shake');
+        setTimeout(() => {
+          inputField.removeClass('shake').val('');
+        }, 400);
+      }
+      
+      function showSummary() {
+        $('.summary').show();
+        $('#summaryFields').empty();
+        for (const field of fields) {
+          $('#summaryFields').append(
+            `<p><strong>${field.replace(/^\w/, c => c.toUpperCase())}:</strong> ${formData[field]}</p>`
+          );
+        }
+      }
+let formData = {};
+
+
+  </script>
+</body>
+</html>

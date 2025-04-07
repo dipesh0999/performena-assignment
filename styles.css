@@ -1,0 +1,141 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #1c1c1c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .form_container {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    max-width: 90%;
+    transition: all 0.3s ease;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .form_step {
+    display: none;
+    flex-direction: column;
+    animation: fadeIn 0.4s ease;
+  }
+  
+  .form_step.active {
+    display: flex;
+  }
+  
+  input, select {
+    padding: 12px;
+    margin-top: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    color: #f5576c;
+  }
+
+  input::placeholder{
+    color: #f5576c;
+  }
+  
+  input:focus, select:focus {
+    border-color: #f5576c;
+    outline: none;
+  }
+  
+  button {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #f5576c !important;
+      background: #f5576c;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: all .3s ease-in;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    button span{
+        position: relative;
+    }
+
+  button::before{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      transform: scaleX(0);
+      transform-origin: bottom right;
+      transition: transform .3s ease-in;
+      border-radius: 6px;
+    }
+
+    button:hover {
+        color: #000;
+    }
+
+    button:hover::before{
+    transform: scaleX(1);
+    transform-origin: bottom left;
+    }
+    
+
+  .btn_group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .error_msg {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .shake {
+    animation: shake 0.3s;
+  }
+  
+
+  #summaryFields p{
+    margin-bottom: 5px;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+  }
+  
