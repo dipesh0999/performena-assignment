@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Modern Registration Form</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -18,7 +20,7 @@
 
         <div class="form_step" data-field="phone">
           <label>Phone</label>
-          <input type="text" placeholder="10-digit number" />
+          <input type="text" inputmode="numeric" pattern="\d{10}" maxlength="10"  placeholder="10-digit number" class="phone_number" />
           <span class="error_msg"></span>
         </div>
 
@@ -163,6 +165,10 @@
       }
 let formData = {};
 
+
+  document.querySelector('.phone_number').addEventListener('input', function (e) {
+    this.value = this.value.replace(/\D/g, '');
+  });
 
   </script>
 </body>
